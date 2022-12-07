@@ -14,7 +14,9 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title'=>'This is title',
+            'slug'=>'This is slug',
+            'body'=>'This is body'
         ];
     }
 }

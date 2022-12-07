@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Http\Controllers\PostCntroller;
 use App\Models\Post;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -41,7 +42,23 @@ class PostCntrollerTest extends TestCase
         // Assert / Then
         $this->assertEquals($post->id, $getPost->id);
         $this->assertEquals("This is title", $getPost->title);
+        $this->assertEquals("This is slug", $getPost->slug);
+        $this->assertEquals("This is body", $getPost->body);
 
     }
+
+    /** @test */
+    public function trows_exception_if_wrong_id_pass(){
+        // Arrange / When
+        Post::factory()->create();
+
+        // Assert / Then
+        $this->expectException(ModelNotFoundException::class);
+
+        // Act / Given
+        $posts = (new PostCntroller)->show(100);
+
+    }
+
 
 }
