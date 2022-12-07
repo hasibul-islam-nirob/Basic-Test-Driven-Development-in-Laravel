@@ -11,11 +11,11 @@ class PostCntrollerTest extends TestCase
 
     /** @test */
     public function show_list_of_post(){
-        // Arrange
+        // Arrange / When
 
-        // Act
+        // Act / Given
 
-        // Assert
+        // Assert / Then
 
 
     }
