@@ -80,4 +80,22 @@ class PostCntrollerTest extends TestCase
     }
 
 
+    /** @test */
+    public function delete_post(){
+        // Arrange
+        $postOne = Post::factory()->create();
+
+        $postTwo = Post::factory()->create();
+
+        $this->assertDatabaseCount('posts',2);
+
+        // Act
+        (new PostCntroller)->delete($postTwo->id);
+
+        // Assert
+        $this->assertDatabaseCount('posts',1);
+
+    }
+
+
 }

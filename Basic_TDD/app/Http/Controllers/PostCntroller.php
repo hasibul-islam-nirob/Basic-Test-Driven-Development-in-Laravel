@@ -15,6 +15,10 @@ class PostCntroller extends Controller
         return Post::findOrFail($id);
     }
 
+    function delete(int $id){
+        return Post::destroy($id);
+    }
+
     function create(array $post){
         return Post::create($post);
     }
