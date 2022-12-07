@@ -22,4 +22,8 @@ class PostCntroller extends Controller
     function create(array $post){
         return Post::create($post);
     }
+
+    function update(array $post, int $id){
+        return Post::where($id)->update($post);
+    }
 }
