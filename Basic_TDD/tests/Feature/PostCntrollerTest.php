@@ -61,4 +61,23 @@ class PostCntrollerTest extends TestCase
     }
 
 
+    /** @test */
+    public function create_new_post(){
+        // Arrange
+        $this->assertDatabaseCount('posts',0);
+        $post = [
+            'title'=>'This is title',
+            'slug'=>'This is slug',
+            'body'=>'This is body'
+        ];
+
+        // Act
+        (new PostCntroller)->create($post);
+
+        // Assert
+        $this->assertDatabaseCount('posts',1);
+
+    }
+
+
 }
