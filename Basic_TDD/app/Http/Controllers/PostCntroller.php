@@ -11,5 +11,7 @@ class PostCntroller extends Controller
         return Post::all();
     }
 
-
+    function show(int $id){
+        return Post::findOrFail($id);
+    }
 }

@@ -26,6 +26,17 @@ class PostCntrollerTest extends TestCase
 
     }
 
+    /** @test */
+    public function show_single_post(){
+        // Arrange / When
+        $post = Post::factory()->create();
 
+        // Act / Given
+        $getPost = (new PostCntroller)->show($post->id);
+
+        // Assert / Then
+        $this->assertEquals($post->id, $getPost->id);
+
+    }
 
 }
