@@ -27,13 +27,15 @@ class PostCntrollerTest extends TestCase
 
     }
 
+
     /** @test */
     public function show_single_post(){
         // Arrange / When
         $post = Post::factory()->create([
             'title'=>'This is title',
             'slug'=>'This is slug',
-            'body'=>'This is body'
+            'body'=>'This is body',
+            'user_id'=>1
         ]);
 
         // Act / Given
@@ -46,6 +48,7 @@ class PostCntrollerTest extends TestCase
         $this->assertEquals("This is body", $getPost->body);
 
     }
+
 
     /** @test */
     public function trows_exception_if_wrong_id_pass(){
@@ -68,7 +71,8 @@ class PostCntrollerTest extends TestCase
         $post = [
             'title'=>'This is title',
             'slug'=>'This is slug',
-            'body'=>'This is body'
+            'body'=>'This is body',
+            'user_id'=>1
         ];
 
         // Act
