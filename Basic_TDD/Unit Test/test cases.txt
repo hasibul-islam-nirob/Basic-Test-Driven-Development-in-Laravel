@@ -1,0 +1,140 @@
+/** @test  */
+    function test_create_user(){
+        // Arrange
+        $post = [
+            'name'=> 'Siam',
+            'email'=> 'nirob@gmail.com',
+            'contact'=> '01518793243',
+            'occupation'=> 'Student',
+            'address'=>'Tejgaon Dhaka',
+            'city'=> 'Dhaka',
+            'state'=> 'Bangladesh',
+            'zip'=> '1215',
+            'gander'=> 'Male',
+            'check_one'=> '0'
+        ];
+
+        // Act
+        $res = $this->post('/create_user', $post);
+        $one = ExampleModel::orderBy('id','desc')->get()->first();
+        $oneID = $one->id;
+
+        // Assert
+       $res->assertSee('success');
+       //$res->assertSeeText($oneID);
+       $this->assertEquals(200,$res->status());
+
+    }
+
+
+
+
+    /** @test  */
+    function test_insert_data(){
+        // Arrange
+        $post = [
+            'name'=> '',
+            'email'=> '',
+            'contact'=> '',
+            'occupation'=> '',
+            'city'=> '',
+            'state'=> '',
+            'zip'=> '',
+            'gander'=> '',
+            'check_one'=> '1'
+        ];
+
+        // Act
+        $res = $this->post('/on_create', $post);
+
+        // Assert
+        $res->assertSessionHas('createMsg');
+        $res->assertStatus($res->status(), 200);
+
+    }
+
+
+
+    /** @test  */
+    function test_show_json_data(){
+
+        // Arrange
+
+        // Act
+        $res = $this->get('/getData');
+        //$res = (new ExampleController)->getData();
+
+        // Assert
+        $res->assertStatus( 200);
+        $res->assertJson([
+            'data'=>[
+                "name" => "Demo",
+                "email" => "demo@gmail.com",
+                "contact" => "01555554444",
+                "occupation" => "teacher",
+                "address" => "dhaka",
+                "city" => "Dhaka",
+            ]
+        ]);
+
+    }
+
+
+
+    /** @test  */
+    function test_delete_data(){
+
+        // Arrange
+
+        // Act
+        $deleteID = 33;
+        $findData = ExampleModel::where('id',$deleteID)->count();
+        if($findData == 1){
+            $res = $this->post('/delete_data/'.$deleteID);
+        }
+
+
+        // Asser
+        $this->assertEquals(1, $findData);
+        $this->assertEquals(302,$res->status());
+        $res->assertStatus($res->status(), 200);
+
+    }
+
+
+
+    /** @test  */
+    function test_update_data(){
+        // Arrange
+        $post = [
+            'name'=> 'Nirob 123 gfg',
+            'email'=> 'nirob@gmail.com',
+            'contact'=> '01518793243',
+            'occupation'=> 'Student',
+            'address'=>'Tejgaon Dhaka',
+            'city'=> 'Dhaka',
+            'state'=> 'Bangladesh',
+            'zip'=> '1215',
+            'gander'=> 'Male',
+            'check_one'=> '0'
+        ];
+
+        // Act
+        $updateID = 36;
+        $findData = ExampleModel::where('id',$updateID)->count();
+
+        if($findData == 1){
+            $res = $this->post('/on_update/'.$updateID, $post);
+    }
+
+
+
+
+
+        // Assert
+        $this->assertEquals(1, $findData);
+        $res->assertStatus($res->status(), 200);
+        $res->assertSessionHas(['updateMsg' => 'success']);
+        $this->assertEquals(302,$res->status());
+
+    }
